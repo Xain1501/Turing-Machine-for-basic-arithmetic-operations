@@ -1,4 +1,4 @@
-def unary_subtract_tm(a, b, show=True):
+def Sub(a, b, show=True):
     tape = [1] * a + [-1] + [1] * b
     head = 0
     if show:
@@ -28,7 +28,7 @@ def unary_subtract_tm(a, b, show=True):
         print("-" * 40)
     return result
 
-def unary_division_tm(a, b):
+def Div(a, b):
     if b == 0:
         print("Error: Division by zero.")
         return
@@ -38,20 +38,10 @@ def unary_division_tm(a, b):
     quotient = 0
 
     while a >= b:
-        a = unary_subtract_tm(a, b)
+        a = Sub(a, b)
         quotient += 1
 
     print(f"Final Quotient: {quotient}")
     print(f"Final Remainder: {a}")
 
-def main():
-    print("Unary Division Turing Machine")
-    try:
-        a = int(input("Enter dividend (a): "))
-        b = int(input("Enter divisor (b): "))
-        unary_division_tm(a, b)
-    except ValueError:
-        print("Please enter valid integers.")
 
-if __name__ == "__main__":
-    main()
