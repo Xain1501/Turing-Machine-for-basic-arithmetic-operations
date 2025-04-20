@@ -1,4 +1,4 @@
-def Sub(a, b, show=True):
+def Subtract(a, b, show=True):
     tape = [1] * a + [-1] + [1] * b
     head = 0
     if show:
@@ -28,7 +28,7 @@ def Sub(a, b, show=True):
         print("-" * 40)
     return result
 
-def Div(a, b):
+def Divide(a, b):
     if b == 0:
         print("Error: Division by zero.")
         return
@@ -43,5 +43,60 @@ def Div(a, b):
 
     print(f"Final Quotient: {quotient}")
     print(f"Final Remainder: {a}")
+
+def power(a,b):
+    res=1;
+    for _ in range(b):
+        res=multiply(res,a)
+        
+    return res
+
+def main():
+    print("unary turing machine for Arithmetic Operations: ")
+    
+    while True:
+        print("choose an option: ")
+        print("1: Add ")
+        print("2: Subtract ")
+        print("3: Multiply ")
+        print("4: Divide ")
+        print("5: Power ")
+        print("6: Exit ")
+        
+        choice = input("enter choice 1 to 6: ")
+        if choice=='6':
+            print("exiting! ")
+            break
+        
+        a = int(input("Enter your first number: "))
+        b = int(input("Enter your second number: "))
+        
+        if choice =='1':
+            add(a,b)
+            
+        elif choice =='2':
+            if a<b:
+                printf("can not perforn subtract when a<b")
+                break
+            else:
+                Subtract(a,b)
+        
+        elif choice =='3':
+            multiply(a,b)
+        
+        
+        elif choice =='4':
+            Divide(a,b)
+            
+        
+        elif choice =='5':
+            power(a,b)
+        
+        
+        else:
+            printf("invalid option selected!")
+            
+        
+
 
 
