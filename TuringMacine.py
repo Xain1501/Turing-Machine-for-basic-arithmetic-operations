@@ -1,9 +1,64 @@
 
-def add(a,b):
-    return -1
+def add(tape):
+    tape = list(tape)+['_']
 
-def multiply(a,b):
-    return -1
+    while '+' in tape:
+        head=0
+
+        while tape[head] !='+':
+            head+=1
+
+        # replace '+' with 1
+        tape[head] = '1'
+
+        # move to the end of the tape
+        while tape[head]!= '_':
+            head+=1
+        
+        # make the last 1 to blank
+        head-=1
+        while tape[head] != '1':
+            head -= 1
+        tape[head] = '_'
+
+    
+    result=0
+    while tape[result] != '_':
+        result+=1
+    
+    return result
+
+def unaryMultiplication(tape):
+    tape = list(tape) + ['_']*1000
+    starPos=0
+    while tape[starPos] != '*':
+        starPos+=1
+    
+    # number of 1's before the '*' symbol
+    multiplicandCount=0
+    for i in range(0,starPos):
+        if tape[i] == '1':
+            multiplicandCount+=1
+    
+    #the 1's after the '*' symbol
+    multiplierStart = starPos+1
+    multiplierEnd = len(tape)
+    while multiplierEnd>multiplierStart and tape[multiplierEnd-1]!='1':
+        multiplierEnd -= 1
+    
+    #Find the end of the current tape
+    writeHead = len(tape)-1
+    while writeHead>=0 and tape[writeHead]== '_':
+        writeHead -= 1
+    writeHead+=1 #first blank pos
+
+    for _ in range(multiplicandCount):
+        for i in range(multiplierStart,multiplierEnd):
+            if tape[i] == '1':
+                    tape[writeHead] = 'X'
+            writeHead+=1
+    
+    return tape.count('X')
 
 
 
