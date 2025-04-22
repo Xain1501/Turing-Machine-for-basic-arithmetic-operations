@@ -33,7 +33,7 @@ def add(a, b):
 def unaryMultiplication(a, b):
     # Create tape in format "11*111" where a=2 and b=3
     tape = ['1'] * a + ['*'] + ['1'] * b
-    tape = tape + ['_'] * 100000  # Add blank symbols at end for working space
+    tape = tape + ['_'] * (a*b)  # Add blank symbols at end for working space
 
     starPos = 0
     while tape[starPos] != '*':
