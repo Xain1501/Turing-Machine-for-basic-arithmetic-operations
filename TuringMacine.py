@@ -1,66 +1,69 @@
 
-def add(tape):
-    tape = list(tape)+['_']
+def add(a, b):
+    # Create tape in format "11+111" where a=2 and b=3
+    tape = ['1'] * a + ['+'] + ['1'] * b
+    tape = tape + ['_']  # Add blank symbol at end
 
     while '+' in tape:
-        head=0
+        head = 0
 
-        while tape[head] !='+':
-            head+=1
+        while tape[head] != '+':
+            head += 1
 
         # replace '+' with 1
         tape[head] = '1'
 
         # move to the end of the tape
-        while tape[head]!= '_':
-            head+=1
+        while tape[head] != '_':
+            head += 1
         
         # make the last 1 to blank
-        head-=1
+        head -= 1
         while tape[head] != '1':
             head -= 1
         tape[head] = '_'
 
-    
-    result=0
-    while tape[result] != '_':
-        result+=1
+    # Count the number of 1's remaining
+    result = 0
+    while result < len(tape) and tape[result] == '1':
+        result += 1
     
     return result
+    
+def unaryMultiplication(a, b):
+    # Create tape in format "11*111" where a=2 and b=3
+    tape = ['1'] * a + ['*'] + ['1'] * b
+    tape = tape + ['_'] * 1000  # Add blank symbols at end for working space
 
-def unaryMultiplication(tape):
-    tape = list(tape) + ['_']*1000
-    starPos=0
+    starPos = 0
     while tape[starPos] != '*':
-        starPos+=1
+        starPos += 1
     
-    # number of 1's before the '*' symbol
-    multiplicandCount=0
-    for i in range(0,starPos):
+    # number of 1's before the '*' symbol (multiplicand)
+    multiplicandCount = 0
+    for i in range(0, starPos):
         if tape[i] == '1':
-            multiplicandCount+=1
+            multiplicandCount += 1
     
-    #the 1's after the '*' symbol
-    multiplierStart = starPos+1
+    # the 1's after the '*' symbol (multiplier)
+    multiplierStart = starPos + 1
     multiplierEnd = len(tape)
-    while multiplierEnd>multiplierStart and tape[multiplierEnd-1]!='1':
+    while multiplierEnd > multiplierStart and tape[multiplierEnd - 1] != '1':
         multiplierEnd -= 1
     
-    #Find the end of the current tape
-    writeHead = len(tape)-1
-    while writeHead>=0 and tape[writeHead]== '_':
+    # Find the end of the current tape
+    writeHead = len(tape) - 1
+    while writeHead >= 0 and tape[writeHead] == '_':
         writeHead -= 1
-    writeHead+=1 #first blank pos
+    writeHead += 1  # first blank pos
 
     for _ in range(multiplicandCount):
-        for i in range(multiplierStart,multiplierEnd):
+        for i in range(multiplierStart, multiplierEnd):
             if tape[i] == '1':
-                    tape[writeHead] = 'X'
-            writeHead+=1
+                tape[writeHead] = 'X'
+            writeHead += 1
     
     return tape.count('X')
-
-
 
 
 def Subtract(a, b, show=True):
