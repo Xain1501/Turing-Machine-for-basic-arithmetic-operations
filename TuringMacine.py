@@ -107,8 +107,8 @@ def Subtract(show=True):
     return result
 
 def Divide():
-    print("prompt a as the numerator and b as the denominator")
-    a, b = get_inputs()
+    a = int(input("Enter numerator: "))
+    b = int(input("Enter denominator: "))
     if b == 0:
         print("Error: Division by zero.")
         return
@@ -118,11 +118,12 @@ def Divide():
     quotient = 0
 
     while a >= b:
-        a -= b
+        a = Subtract(a, b)
         quotient += 1
 
     print(f"Final Quotient: {quotient}")
     print(f"Final Remainder: {a}")
+
 
 def power():
     print("prompt a as the base and b as the exponent")
