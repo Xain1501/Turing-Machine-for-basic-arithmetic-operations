@@ -33,7 +33,7 @@ def add(a, b):
 def unaryMultiplication(a, b):
     # Create tape in format "11*111" where a=2 and b=3
     tape = ['1'] * a + ['*'] + ['1'] * b
-    tape = tape + ['_'] * 1000  # Add blank symbols at end for working space
+    tape = tape + ['_'] * 100000  # Add blank symbols at end for working space
 
     starPos = 0
     while tape[starPos] != '*':
@@ -113,13 +113,13 @@ def Divide(a, b):
     print(f"Final Remainder: {a}")
 
 def power(a,b):
-    res=1;
+    res=1
     for _ in range(b):
-        res=multiply(res,a)
+        res=unaryMultiplication(res,a)
         
     return res
 def main():
-    print("unary turing machine for Arithmetic Operations: ")
+    print("Unary turing machine for Arithmetic Operations: ")
     
     while True:
         print("Choose an option: ")
@@ -150,7 +150,7 @@ def main():
                 print("Result:", result)
         
         elif choice == '3':
-            result = multiply(a, b)
+            result = unaryMultiplication(a, b)
             print("Result:", result)
         
         elif choice == '4':
