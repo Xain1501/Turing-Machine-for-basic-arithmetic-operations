@@ -1,5 +1,10 @@
+def get_inputs():
+    a = int(input("Enter your first number: "))
+    b = int(input("Enter your second number: "))
+    return a, b
 
-def add(a, b):
+def add():
+    a, b = get_inputs()
     # Create tape in format "11+111" where a=2 and b=3
     tape = ['1'] * a + ['+'] + ['1'] * b
     tape = tape + ['_']  # Add blank symbol at end
@@ -29,8 +34,9 @@ def add(a, b):
         result += 1
     
     return result
-    
-def unaryMultiplication(a, b):
+
+def unaryMultiplication():
+    a, b = get_inputs()
     # Create tape in format "11*111" where a=2 and b=3
     tape = ['1'] * a + ['*'] + ['1'] * b
     tape = tape + ['_'] * (a*b)  # Add blank symbols at end for working space
@@ -65,8 +71,12 @@ def unaryMultiplication(a, b):
     
     return tape.count('X')
 
-
-def Subtract(a, b, show=True):
+def Subtract(show=True):
+    a, b = get_inputs()
+    if a < b:
+        print("can not perform subtract when a < b")
+        return None
+        
     tape = [1] * a + [-1] + [1] * b
     head = 0
     if show:
@@ -96,7 +106,9 @@ def Subtract(a, b, show=True):
         print("-" * 40)
     return result
 
-def Divide(a, b):
+def Divide():
+    print("prompt a as the numerator and b as the denominator")
+    a, b = get_inputs()
     if b == 0:
         print("Error: Division by zero.")
         return
@@ -106,18 +118,57 @@ def Divide(a, b):
     quotient = 0
 
     while a >= b:
-        a = Subtract(a, b)
+        a -= b
         quotient += 1
 
     print(f"Final Quotient: {quotient}")
     print(f"Final Remainder: {a}")
 
-def power(a,b):
-    res=1
+def power():
+    print("prompt a as the base and b as the exponent")
+    a = int(input("Enter base: "))
+    b = int(input("Enter exponent: "))
+    res = 1
     for _ in range(b):
-        res=unaryMultiplication(res,a)
+        res = unaryMultiplication_single(res, a)
         
     return res
+
+def unaryMultiplication_single(a, b):
+    # Create tape in format "11*111" where a=2 and b=3
+    tape = ['1'] * a + ['*'] + ['1'] * b
+    tape = tape + ['_'] * (a*b)  # Add blank symbols at end for working space
+
+    starPos = 0
+    while tape[starPos] != '*':
+        starPos += 1
+    
+    # number of 1's before the '*' symbol (multiplicand)
+    multiplicandCount = 0
+    for i in range(0, starPos):
+        if tape[i] == '1':
+            multiplicandCount += 1
+    
+    # the 1's after the '*' symbol (multiplier)
+    multiplierStart = starPos + 1
+    multiplierEnd = len(tape)
+    while multiplierEnd > multiplierStart and tape[multiplierEnd - 1] != '1':
+        multiplierEnd -= 1
+    
+    # Find the end of the current tape
+    writeHead = len(tape) - 1
+    while writeHead >= 0 and tape[writeHead] == '_':
+        writeHead -= 1
+    writeHead += 1  # first blank pos
+
+    for _ in range(multiplicandCount):
+        for i in range(multiplierStart, multiplierEnd):
+            if tape[i] == '1':
+                tape[writeHead] = 'X'
+            writeHead += 1
+    
+    return tape.count('X')
+
 def main():
     print("Unary turing machine for Arithmetic Operations: ")
     
@@ -135,36 +186,28 @@ def main():
             print("exiting! ")
             break
         
-        a = int(input("Enter your first number: "))
-        b = int(input("Enter your second number: "))
-        
         if choice == '1':
-            result = add(a, b)
+            result = add()
             print("Result:", result)
             
         elif choice == '2':
-            if a < b:
-                print("can not perform subtract when a < b")
-            else:
-                result = Subtract(a, b)
+            result = Subtract()
+            if result is not None:
                 print("Result:", result)
         
         elif choice == '3':
-            result = unaryMultiplication(a, b)
+            result = unaryMultiplication()
             print("Result:", result)
         
         elif choice == '4':
-            Divide(a, b)
+            Divide()
             
         elif choice == '5':
-            result = power(a, b)
+            result = power()
             print("Result:", result)
         
         else:
             print("invalid option selected!")
-
-
-
 
 if __name__ == "__main__":
     main()
