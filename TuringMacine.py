@@ -1,9 +1,9 @@
 
 def add(a, b):
-    # Create tape in format "11+111" where a=2 and b=3
+  
     tape = ['1'] * a + ['+'] + ['1'] * b
-    tape = tape + ['_']  # Add blank symbol at end
-
+    tape = tape + ['_'] 
+    
     while '+' in tape:
         head = 0
 
@@ -23,7 +23,7 @@ def add(a, b):
             head -= 1
         tape[head] = '_'
 
-    # Count the number of 1's remaining
+  
     result = 0
     while result < len(tape) and tape[result] == '1':
         result += 1
@@ -31,9 +31,9 @@ def add(a, b):
     return result
     
 def unaryMultiplication(a, b):
-    # Create tape in format "11*111" where a=2 and b=3
+
     tape = ['1'] * a + ['*'] + ['1'] * b
-    tape = tape + ['_'] * (a*b)  # Add blank symbols at end for working space
+    tape = tape + ['_'] * (a*b) 
 
     starPos = 0
     while tape[starPos] != '*':
